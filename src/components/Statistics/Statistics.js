@@ -6,27 +6,17 @@ export default function Statistics({ title, stats }) {
         <section className={styles.statistics}>
             {title && <h2 className={styles.title}>{title}</h2>}
 
-            <ul className="stat-list">
-                <li className="item">
-                    <span className="label">.docx</span>
-                    <span className="percentage">4%</span>
-                </li>
-                <li className="item">
-                    <span className="label">.mp3</span>
-                    <span className="percentage">14%</span>
-                </li>
-                <li className="item">
-                    <span className="label">.pdf</span>
-                    <span className="percentage">41%</span>
-                </li>
-                <li className="item">
-                    <span className="label">.mp4</span>
-                    <span className="percentage">12%</span>
-                </li>
+            <ul className={styles.stat_list}>
+                {stats.map(item => (
+                    <li key={item.id} className={styles.item} style={{ backgroundColor: getRandomHexColor() }}>
+                    <span className={styles.label}>{item.label}</span>
+                    <span className={styles.percentage}>{item.percentage}%</span>
+                    </li>
+                ))}
             </ul>
-        </section>
+        </section>   
     );
-}
+};
 
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215)
@@ -35,10 +25,12 @@ function getRandomHexColor() {
 }
 
 Statistics.propTypes = {
-    title: PropTypes.string.isRequired
-    stats: PropTypes.arrayOf({
-        PropTypes.shape(
-        
+    title: PropTypes.string.isRequired,
+    stats: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            label: PropTypes.string.isRequired,
+            percentage: PropTypes.number.isRequired,
         })
-    )
-}
+    ),
+};
